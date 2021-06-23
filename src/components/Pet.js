@@ -1,4 +1,4 @@
-import React from 'react'
+import React from "react";
 
 class Pet extends React.Component {
   render() {
@@ -7,23 +7,44 @@ class Pet extends React.Component {
         <div className="content">
           <a className="header">
             {/*'♀' OR '♂' */}
-            PET NAME
+            {/* uses props to grab name and gender */}
+            {this.props.pet.name + " "}
+            {this.props.pet.gender === "male" ? "♂" : "♀"}
           </a>
           <div className="meta">
-            <span className="date">PET TYPE</span>
+            {/* uses props to grab type cat dog, pig etc. */}
+            <span className="date">{this.props.pet.type}</span>
           </div>
           <div className="description">
-            <p>Age: PET AGE</p>
-            <p>Weight: PET WEIGHT</p>
+            {/* uses props to grab age and weight */}
+            <p>Age: {this.props.pet.age}</p>
+            <p>
+              Weight:{" "}
+              {/* renders weight displaying lb or lbs if greater than 1 */}
+              {this.props.pet.weight > 1
+                ? this.props.pet.weight + "lbs"
+                : this.props.pet.weight + "lb"}
+            </p>
           </div>
         </div>
         <div className="extra content">
-          <button className="ui disabled button">Already adopted</button>
-          <button className="ui primary button">Adopt pet</button>
+          {/* checks if pet has been adopted if true then the already adopted button displays */}
+          {this.props.pet.isAdopted ? (
+            <button className="ui disabled button">Already adopted</button>
+          ) : (
+            // if false then the adopt pet button is visible
+            <button
+              // when button is clicked, onAdoptPet will run and is passed in the id of the pet
+              onClick={() => this.props.onAdoptPet(this.props.pet.id)}
+              className="ui primary button"
+            >
+              Adopt pet
+            </button>
+          )}
         </div>
       </div>
-    )
+    );
   }
 }
 
-export default Pet
+export default Pet;
